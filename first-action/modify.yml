@@ -1,16 +1,36 @@
-name: modified workflow
-on: [push, workflow_dispatch]
+name: deploy project in parallel
+on:[push , workflow_dispatch]
 jobs:
-  first-job:
+  modify:
     runs-on: ubuntu-latest
     steps:
-      - name: Get code
-        uses: actions/checkout@v3
-      - name: Install NodeJS
-        uses: actions/setup-node@v3
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Modify file
+        uses: actions/setup-node@3
         with:
-          node-version: 18
-      - name: Install dependencies
-        run: npm ci
-      - name: Run test
-        run: npm test
+          node-version: '18'
+          echo "This is a modification made by the workflow." 
+      -  name: Install dependencies
+         run: npm install
+      -  name: Run tests
+         run: npm test
+  
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Nodejs
+        uses: actions/setup-node@3
+        with:
+          node-version: '18'
+          echo "This is a modification made by the workflow." >> 
+      -  name: Install dependencies
+         run: npm install
+      -  name: build test project
+         run: npm run build
+      -  name: Deploy project
+         run: echo "Deploying project..." && npm run deploy
