@@ -1,0 +1,23 @@
+name: writinga project
+on:[pus, pull_request, workflow_dispatch]
+jobs:
+  modify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Modify file
+        uses: actions/setup-node@3
+        with:
+          node-version: '18'
+          echo "This is a modification made by the workflow." >> file.txt
+
+      - name: Commit changes
+        run: |
+          git config --local user.name "GitHub Actions"
+          git config --local user.email "
+      -  name: Install dependencies
+         run: npm install
+      -  name: Run tests
+         run: npm test
