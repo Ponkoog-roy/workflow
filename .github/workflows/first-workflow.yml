@@ -1,15 +1,17 @@
 name: deploy project in parallel
-on: [push, workflow_dispatch]
+on:[push , workflow_dispatch]
 jobs:
   modify:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+
+      - name: Modify file
+        uses: actions/setup-node@3
         with:
-          node-version: 18
+          node-version: '18'
+          echo "This is a modification made by the workflow." 
       -  name: Install dependencies
          run: npm install
       -  name: Run tests
@@ -20,14 +22,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
       - name: Install Nodejs
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@3
         with:
-          node-version: 18
+          node-version: '18'
+          echo "This is a modification made by the workflow." 
       -  name: Install dependencies
          run: npm install
       -  name: build test project
          run: npm run build
       -  name: Deploy project
-         run: echo "Deploying project..." 
-
+         run: echo "Deploying project..." && npm run deploy
