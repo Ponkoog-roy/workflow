@@ -6,6 +6,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Install Nodejs
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
 
   deploy:
     needs: modify
